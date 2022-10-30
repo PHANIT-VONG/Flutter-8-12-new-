@@ -1,4 +1,5 @@
 import 'package:firebase_8_12/screens/home_screen.dart';
+import 'package:firebase_8_12/screens/login_screen.dart';
 import 'package:firebase_8_12/widgets/show_message.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +30,34 @@ class AutheticationService {
           color: Colors.red,
         );
       }
+    }
+  }
+
+  Future register(String email, String password) async {
+    try {
+      await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+            email: email,
+            password: password,
+          )
+          .then((value) => Get.to(const LoginScreen()));
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        ShowMessage.showSnackbar(
+          message: 'The password provided is too weak.',
+          color: Colors.red,
+        );
+      } else if (e.code == 'email-already-in-use') {
+        ShowMessage.showSnackbar(
+          message: 'The account already exists for that email.',
+          color: Colors.red,
+        );
+      }
+    } catch (e) {
+      ShowMessage.showSnackbar(
+        message: e.toString(),
+        color: Colors.red,
+      );
     }
   }
 

@@ -1,6 +1,8 @@
+import 'package:firebase_8_12/screens/register_screen.dart';
 import 'package:firebase_8_12/services/authentications.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -51,7 +53,13 @@ class LoginScreen extends StatelessWidget {
                       password.text,
                     );
                   },
-                )
+                ),
+                TextButton(
+                  onPressed: () {
+                    Get.to(const RegisterScreen());
+                  },
+                  child: const Text('Register'),
+                ),
               ],
             ),
           ),
